@@ -2,11 +2,11 @@
 <ul>
     {% if user.is_authenticated %}
     <li>
-        <a href="">logout</a>
+        <a href="{% url "users:logout" %}">logout</a>
     </li>
     {% else %}
     <li>
-        <a href="">login</a>
+        <a href="{% url "users:login" %}">login</a>
     </li>
     <li>
         <a href="{% url "users:signup" %}">signup</a>

@@ -11,7 +11,6 @@ class CustomerUserAdmin(UserAdmin):
             "fields": (
                 "avatar",
                 "gender",
-                "bio",
                 "superhost",
             ),
         }),

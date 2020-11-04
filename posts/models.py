@@ -11,17 +11,6 @@ class Category(core_models.TimeStampedModel):
         verbose_name_plural = "Categories"
 
 
-class Photo(core_models.TimeStampedModel):
-    """ Photo Model Definition"""
-
-    caption = models.CharField(max_length=100)
-    file = models.ImageField()
-    post = models.ForeignKey("Post", on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.caption
-
-
 class Comment(core_models.TimeStampedModel):
     """ Comment Model Definition"""
 
@@ -37,6 +26,8 @@ class Reply(core_models.TimeStampedModel):
     """ Reply Model Definition"""
 
     description = models.TextField()
+    comment = models.ForeignKey(
+        "Comment", on_delete=models.CASCADE, blank=True, null=True)
     author = models.ForeignKey("users.User", on_delete=models.CASCADE)
 
     def __str__(self):
@@ -48,10 +39,11 @@ class Post(core_models.TimeStampedModel):
 
     title = models.CharField(max_length=140)
     description = models.TextField()
+    photo = models.ImageField()
     author = models.ForeignKey(
         "users.User", related_name="author", on_delete=models.CASCADE)
     is_published = models.BooleanField(default=False)
     authorized_by = models.ForeignKey(
-        "users.User", related_name="authorized_by", on_delete=models.SET_NULL, blank=True, null=True)
+        "users.User", on_delete=models.SET_NULL, null=True, blank=True, default=None)
     category = models.ForeignKey(
         "Category", on_delete=models.CASCADE)

@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # PACKAGE_APPS
+    'django_seed',
+
     # PROJECT_APPS
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',

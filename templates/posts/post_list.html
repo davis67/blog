@@ -8,6 +8,35 @@ All Posts
 
 {{now}}
 
-<h2>I am home</h2>
+{% if user.is_authenticated %}
+<h3>
+    <a href="{% url 'posts:post-create' %}">add a post</a>
+</h3>
+{% endif%}
+
+{% if object_list.count > 0 %}
+{% for post in object_list %}
+<h1>
+    <a href="{% url 'posts:detail' post.pk %}">{{post.title}}</a>
+</h1>
+{% endfor %}
+{% else %}
+<h1>
+    No Posts
+</h1>
+{% endif %}
+<h5>
+    {% if page_obj.has_previous %}
+    <a href="?page={{page_obj.previous_page_number}}">Previous</a>
+    {% endif %}
+    {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+    {% if page_obj.has_next %}
+    <a href="?page={{page_obj.next_page_number}}">Next</a>
+    {% endif %}
+</h5>
+
+{% comment %} {% for page in page_range %}
+<a href="?page={{page}}">{{page}}</a>
+{% endfor%} {% endcomment %}
 
 {% endblock content %}

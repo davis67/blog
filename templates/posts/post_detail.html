@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block page_name %}
+Home
+{% endblock page_name %}
+
+{% block content %}
+<div>
+
+    <h1>{{post.title}}</h1>
+    <h3>{{post.description}}</h3>
+
+</div>
+<h1>By {{post.author.username}}
+    {% if post.author.superhost %}
+    (superhost)
+    {% endif%}
+</h1>
+<h2>comments</h2>
+{% if post.comments.count > 0 %}
+<ul>
+    {% for comment in post.comments.all %}
+    <li>
+        {{comment.description}}
+        <h1>
+            By {{comment.author.username}}
+        </h1>
+    </li>
+
+    {% if comment.replies.count > 0 %}
+
+    <h2>Reply</h2>
+
+    {% for reply in comment.replies.all %}
+    <li>
+        {{reply.description}}
+        <h1>
+            By {{reply.author.username}}
+        </h1>(reply)
+    </li>
+    {%endfor%}
+
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <form method='POST' action="{% url 'posts:add-reply' pk=comment.id %}">
+        {% csrf_token %}
+        <div>
+            <textarea name="description" id="" cols="50" rows="5" required></textarea>
+        </div>
+        <button type="submit">Reply</button>
+    </form>
+    {% endif %}
+
+    {%endfor%}
+
+</ul>
+
+{% else %}
+
+<ul>
+    <li>No Comments</li>
+</ul>
+
+{% endif%}
+
+{% if user.is_authenticated %}
+<form method='POST' action="{% url 'posts:add-comment' pk=post.id %}">
+    {% csrf_token %}
+    <div>
+        <textarea name="description" id="" cols="50" rows="10" required></textarea>
+    </div>
+    <button type="submit">Comment</button>
+</form>
+{% endif%}
+
+{% endblock content %}

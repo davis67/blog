@@ -16,7 +16,8 @@ class Comment(core_models.TimeStampedModel):
 
     description = models.TextField()
     author = models.ForeignKey("users.User", on_delete=models.CASCADE)
-    post = models.ForeignKey("Post", on_delete=models.CASCADE)
+    post = models.ForeignKey(
+        "Post", related_name="comments", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.description
@@ -27,7 +28,7 @@ class Reply(core_models.TimeStampedModel):
 
     description = models.TextField()
     comment = models.ForeignKey(
-        "Comment", on_delete=models.CASCADE, blank=True, null=True)
+        "Comment", related_name="replies", on_delete=models.CASCADE, blank=True, null=True)
     author = models.ForeignKey("users.User", on_delete=models.CASCADE)
 
     def __str__(self):

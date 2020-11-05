@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import FormView
+from django.urls import reverse_lazy
 from django.utils import timezone
-from . import models
+from . import forms, models
 
 
 class HomeView(ListView):
@@ -22,3 +24,24 @@ class HomeView(ListView):
 class PostDetail(DetailView):
     """Detail view Definition """
     model = models.Post
+
+
+class PostCreate(FormView):
+    """Create view Definition """
+
+    def get(self, request):
+
+        form = forms.PostCreateForm()
+
+        return render(request, "posts/post_create_form.html", {"form": form})
+
+    def post(self, request):
+        form = forms.PostCreateForm(request.POST)
+        print(request.user)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            form.save()
+            return redirect(reverse("core:home"))
+
+        return render(request, "posts/post_create_form.html", {"form": form})

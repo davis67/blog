@@ -26,7 +26,8 @@ Home
             By {{comment.author.username}}
         </h1>
     </li>
-    {% if post.comments.count > 0 %}
+
+    {% if comment.replies.count > 0 %}
 
     <h2>Reply</h2>
 
@@ -38,12 +39,39 @@ Home
         </h1>(reply)
     </li>
     {%endfor%}
+
     {% endif %}
+
+    {% if user.is_authenticated %}
+    <form method='POST' action="{% url 'posts:add-reply' pk=comment.id %}">
+        {% csrf_token %}
+        <div>
+            <textarea name="description" id="" cols="50" rows="5" required></textarea>
+        </div>
+        <button type="submit">Reply</button>
+    </form>
+    {% endif %}
+
     {%endfor%}
+
 </ul>
-{%else %}
+
+{% else %}
+
 <ul>
     <li>No Comments</li>
 </ul>
+
 {% endif%}
+
+{% if user.is_authenticated %}
+<form method='POST' action="{% url 'posts:add-comment' pk=post.id %}">
+    {% csrf_token %}
+    <div>
+        <textarea name="description" id="" cols="50" rows="10" required></textarea>
+    </div>
+    <button type="submit">Comment</button>
+</form>
+{% endif%}
+
 {% endblock content %}

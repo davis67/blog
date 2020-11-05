@@ -6,3 +6,19 @@ class PostCreateForm(forms.ModelForm):
     class Meta:
         model = models.Post
         fields = ("title", "description", "category", "author")
+
+
+class AddReplyForm(forms.Form):
+    description = forms.CharField()
+
+    def clean(self):
+        description = self.cleaned_data.get("description")
+        return self.cleaned_data
+
+
+class AddCommentForm(forms.Form):
+    description = forms.CharField()
+
+    def clean(self):
+        description = self.cleaned_data.get("description")
+        return self.cleaned_data

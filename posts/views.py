@@ -65,6 +65,21 @@ class PostUpdate(View):
                 form.save()
                 # redirect back
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        return HttpResponseRedirect('/')
+
+
+class PostDelete(View):
+    def get(self, request, pk):
+        post = models.Post.objects.get(pk=pk)
+        if post.author == request.user:
+            return render(request, "posts/confirm_post_delete.html", {"post": post})
+        return redirect(reverse("core:home"))
+
+    def post(self, request, pk):
+        post = models.Post.objects.get(pk=pk)
+        if post.author == request.user:
+            post.delete()
+            return redirect(reverse("core:home"))
         return redirect(reverse("core:home"))
 
 

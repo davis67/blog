@@ -14,6 +14,6 @@ Features:.
 8. Logged in users can like a post❌
 10. Logged in users can comment on post.✅
 11. The users must be able to add pictures to their posts if they want to.❌
-12. Logged in users can only delete the posts they created.❌
+12. Logged in users can only delete the posts they created.✅
 13. Admin must approve user posts before they are visible on the homepage.❌
 14. Anonymous users can only view but not comment on posts.✅

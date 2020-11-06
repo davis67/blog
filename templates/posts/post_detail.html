@@ -13,7 +13,7 @@ Home
 
         {% if post.author == user %}
         <a href="{% url 'posts:post-update' pk=post.id %}">edit</a>
-        <a href="">delete</a>
+        <a href="{% url 'posts:post-delete' pk=post.id %}">delete</a>
         {% endif %}
     </h3>
 

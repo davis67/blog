@@ -20,7 +20,7 @@ class Command(BaseCommand):
 
         seeder.add_entity(post_models.Post, number, {
             "author": lambda x: random.choice(all_users),
-            "photo": lambda x: f"/posts_photos/{random.randint(1,7)}.jpg",
+            "photo": lambda x: f"post_photos/{random.randint(1,7)}.jpg",
             "category": lambda x: random.choice(all_categories),
             "authorized_by": None
         })

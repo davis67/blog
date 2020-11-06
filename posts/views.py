@@ -39,7 +39,7 @@ class PostCreate(FormView):
         return render(request, "posts/post_create_form.html", {"form": form})
 
     def post(self, request):
-        form = forms.PostCreateForm(request.POST)
+        form = forms.PostCreateForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -60,7 +60,8 @@ class PostUpdate(View):
     def post(self, request, pk):
         post = models.Post.objects.get(pk=pk)
         if post.author == request.user:
-            form = forms.PostCreateForm(request.POST, instance=post)
+            form = forms.PostCreateForm(
+                request.POST, request.FILES, instance=post)
             if form.is_valid():
                 form.save()
                 # redirect back

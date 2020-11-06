@@ -8,7 +8,7 @@ All Posts
 {%if form.errors %}
 {{form.errors}}
 {%endif%}
-<form method="post" action="{% url 'posts:post-update' pk=post.id %}">
+<form method="post" action="{% url 'posts:post-update' pk=post.id %}" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Update">

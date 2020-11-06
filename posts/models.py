@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import reverse
 from core import models as core_models
 
 
@@ -43,7 +44,7 @@ class Post(core_models.TimeStampedModel):
 
     title = models.CharField(max_length=140)
     description = models.TextField()
-    photo = models.ImageField(blank=True,)
+    photo = models.ImageField(blank=True, upload_to='post_photos/')
     author = models.ForeignKey(
         "users.User", related_name="author", on_delete=models.CASCADE)
     is_published = models.BooleanField(default=False)
@@ -54,6 +55,9 @@ class Post(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('post_detail', kwargs={'pk': str(self.pk)})
 
     # def has_add_permission(self, request,obj=None):
     #     # Should return True if adding an object is permitted, False otherwise.

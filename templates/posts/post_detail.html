@@ -8,7 +8,14 @@ Home
 <div>
 
     <h1>{{post.title}}</h1>
-    <h3>{{post.description}}</h3>
+    <h3>
+        {{post.description}}
+
+        {% if post.author == user %}
+        <a href="{% url 'posts:post-update' pk=post.id %}">edit</a>
+        <a href="">delete</a>
+        {% endif %}
+    </h3>
 
 </div>
 <h1>By {{post.author.username}}
@@ -22,6 +29,10 @@ Home
     {% for comment in post.comments.all %}
     <li>
         {{comment.description}}
+        {% if comment.author == user %}
+        <a href="">edit</a>
+        <a href="">delete</a>
+        {% endif %}
         <h1>
             By {{comment.author.username}}
         </h1>
@@ -34,6 +45,10 @@ Home
     {% for reply in comment.replies.all %}
     <li>
         {{reply.description}}
+        {% if reply.author == user %}
+        <a href="">edit</a>
+        <a href="">delete</a>
+        {% endif %}
         <h1>
             By {{reply.author.username}}
         </h1>(reply)

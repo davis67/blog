@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block page_name %}
+All Posts
+{% endblock page_name %}
+
+{% block content %}
+{%if form.errors %}
+{{form.errors}}
+{%endif%}
+<form method="post" action="{% url 'posts:post-update' pk=post.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update">
+</form>
+{% endblock content %}

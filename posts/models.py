@@ -51,3 +51,21 @@ class Post(core_models.TimeStampedModel):
         "users.User", on_delete=models.SET_NULL, null=True, blank=True, default=None)
     category = models.ForeignKey(
         "Category", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+    # def has_add_permission(self, request,obj=None):
+    #     # Should return True if adding an object is permitted, False otherwise.
+    #     pass
+
+    # def has_change_permission(self, request, obj=None):
+    #     print(self.title)
+    #     # Should return True if editing obj is permitted, False otherwise.
+    #     # If obj is None, should return True or False to indicate whether editing of objects of this type is permitted in general
+    #     return self.author == request.user
+
+    # def has_delete_permission(self, request, obj=None):
+    #     # Should return True if deleting obj is permitted, False otherwise.
+    #     # If obj is None, should return True or False to indicate whether deleting objects of this type is permitted in general
+    #     return self.author == request.user

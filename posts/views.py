@@ -14,7 +14,7 @@ class HomeView(ListView):
     model = models.Post
 
     paginate_by = 10
-    ordering = "created_at"
+    ordering = "-created_at"
     paginate_orphans = 5
 
     def get_context_data(self, **kwargs):
@@ -47,6 +47,25 @@ class PostCreate(FormView):
             return redirect(reverse("core:home"))
 
         return render(request, "posts/post_create_form.html", {"form": form})
+
+
+class PostUpdate(View):
+    def get(self, request, pk):
+        post = models.Post.objects.get(pk=pk)
+        if post.author == request.user:
+            form = forms.PostCreateForm(instance=post)
+            return render(request, "posts/post_update_form.html", {"form": form, "post": post})
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+    def post(self, request, pk):
+        post = models.Post.objects.get(pk=pk)
+        if post.author == request.user:
+            form = forms.PostCreateForm(request.POST, instance=post)
+            if form.is_valid():
+                form.save()
+                # redirect back
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        return redirect(reverse("core:home"))
 
 
 class AddReply(View):

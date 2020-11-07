@@ -7,9 +7,10 @@ from django.views import View
 from django.urls import reverse_lazy
 from django.utils import timezone
 from . import forms, models
+from users import mixins
 
 
-class HomeView(ListView):
+class HomeView(mixins.MustAddProfilePictureAfterSignUp, mixins.LoggedOutOnlyView, ListView):
     """HomeView Definition """
     model = models.Post
 
@@ -29,7 +30,7 @@ class PostDetail(DetailView):
     model = models.Post
 
 
-class PostCreate(FormView):
+class PostCreate(mixins.LoggedInOnlyView, FormView):
     """Create view Definition """
 
     def get(self, request):
@@ -49,7 +50,7 @@ class PostCreate(FormView):
         return render(request, "posts/post_create_form.html", {"form": form})
 
 
-class PostUpdate(View):
+class PostUpdate(mixins.LoggedInOnlyView, View):
     def get(self, request, pk):
         post = models.Post.objects.get(pk=pk)
         if post.author == request.user:
@@ -69,7 +70,7 @@ class PostUpdate(View):
         return HttpResponseRedirect('/')
 
 
-class PostDelete(View):
+class PostDelete(mixins.LoggedInOnlyView, View):
     def get(self, request, pk):
         post = models.Post.objects.get(pk=pk)
         if post.author == request.user:
@@ -84,7 +85,7 @@ class PostDelete(View):
         return redirect(reverse("core:home"))
 
 
-class AddReply(View):
+class AddReply(mixins.LoggedInOnlyView, View):
     model = models.Reply
 
     def post(self, request, pk):

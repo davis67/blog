@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block page_name %}
+Add Profile Picture
+{% endblock page_name %}
+
+{% block content %}
+<div>
+    <div>
+        {{form.errors}}
+        <h1>Add Profile Picture</h1>
+        <form method="post" action="{% url 'users:add-profile-picture' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <label for="">Profile Picture</label>
+                <input type="file" name="avatar">
+            </div>
+            <input type="submit" value="Create Post">
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

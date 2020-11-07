@@ -9,7 +9,7 @@ Features:.
 3. Registered users can login to the system✅
 4. Registered users can logout to the system✅
 5. Registered users can also update their profiles❌
-6. Users must add a profile picture to their profile after registration❌
+6. Users must add a profile picture to their profile after registration✅
 7. Logged in users can create a post ✅
 8. Logged in users can like a post❌
 10. Logged in users can comment on post.✅

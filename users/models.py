@@ -14,5 +14,5 @@ class User(AbstractUser, core_models.TimeStampedModel):
     )
     gender = models.CharField(choices=GENDER_CHOICES,
                               max_length=10, blank=True)
-    avatar = models.ImageField(blank=True)
+    avatar = models.ImageField(blank=True, upload_to='avatar/')
     superhost = models.BooleanField(default=False)

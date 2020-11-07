@@ -1,10 +1,11 @@
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, reverse, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
-from . import forms, models
+from . import forms, mixins, models
 
 
-class SignUpView(View):
+class SignUpView(SuccessMessageMixin, mixins.LoggedOutOnlyView, View):
     def get(self, request):
         form = forms.SignUpForm()
         return render(self.request, "users/signup.html", {"form": form})
@@ -22,11 +23,14 @@ class SignUpView(View):
 
             if user is not None:
                 login(request, user)
+                next_arg = request.GET.get("next")
+                if next_arg is not None:
+                    return next_arg
                 return redirect(reverse('core:home'))
             return render(request, "users/signup.html", {"form": form})
 
 
-class LoginView(View):
+class LoginView(mixins.LoggedOutOnlyView, View):
     def get(self, request):
         form = forms.LoginForm()
         return render(request, "users/login.html", {"form": form})
@@ -42,9 +46,33 @@ class LoginView(View):
             )
             if user is not None:
                 login(request, user)
+                success_message = "Welcome Back!"
+                next_arg = request.GET.get("next")
+                if next_arg is not None:
+                    return next_arg
                 return redirect(reverse("core:home"))
 
         return render(request, "users/login.html", {"form": form})
+
+
+class AddProfileView(mixins.LoggedInOnlyView, View):
+
+    def get(self, request):
+        form = forms.AddProfilePictureForm()
+        return render(request, "users/add-profile-picture.html", {"form": form})
+
+    def post(self, request):
+        form = forms.AddProfilePictureForm(request.POST, request.FILES)
+        if form.is_valid():
+            avatar = form.cleaned_data.get("avatar")
+            print(avatar)
+            loggedInUser = models.User.objects.get(email=request.user.email)
+            loggedInUser.avatar = avatar
+            loggedInUser.save()
+            success_message = "Avatar added!"
+            return redirect(reverse("core:home"))
+
+        return render(request, "posts/post_create_form.html", {"form": form})
 
 
 def log_out(request):

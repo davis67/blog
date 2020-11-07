@@ -49,3 +49,10 @@ class LoginForm(forms.Form):
         except models.User.DoesNotExist:
             self.add_error("email", forms.ValidationError(
                 "Invalid email/password credentials"))
+
+
+class AddProfilePictureForm(forms.Form):
+    avatar = forms.FileField()
+
+    def clean(self):
+        avatar = self.cleaned_data.get("avatar")

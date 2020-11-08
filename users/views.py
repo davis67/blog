@@ -2,6 +2,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, reverse, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
+from django.views.generic import DetailView
+from django.views.generic.edit import UpdateView
 from . import forms, mixins, models
 
 
@@ -65,7 +67,6 @@ class AddProfileView(mixins.LoggedInOnlyView, View):
         form = forms.AddProfilePictureForm(request.POST, request.FILES)
         if form.is_valid():
             avatar = form.cleaned_data.get("avatar")
-            print(avatar)
             loggedInUser = models.User.objects.get(email=request.user.email)
             loggedInUser.avatar = avatar
             loggedInUser.save()
@@ -73,6 +74,21 @@ class AddProfileView(mixins.LoggedInOnlyView, View):
             return redirect(reverse("core:home"))
 
         return render(request, "posts/post_create_form.html", {"form": form})
+
+
+class UserProfileView(DetailView):
+    model = models.User
+    context_object_name = "user_obj"
+
+
+class UpdateProfileView(UpdateView):
+    model = models.User
+    template_name = "users/update-profile.html"
+    fields = ("first_name", "last_name", "username",
+              "email", "gender", "avatar",)
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 def log_out(request):

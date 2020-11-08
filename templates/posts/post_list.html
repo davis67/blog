@@ -13,6 +13,17 @@ All Posts
     <a href="{% url 'posts:post-create' %}">add a post</a>
 </h3>
 {% endif%}
+<ul>
+    <h1>
+        <a href="{% url 'core:home' %}">Latest Posts</a>
+    </h1>
+    {% for category in categories %}
+    <h1>
+        <a href="{% url 'core:home' category.name %}">{{category.name}}</a>
+    </h1>
+    {% endfor %}
+</ul>
+
 
 {% if object_list.count > 0 %}
 {% for post in object_list %}

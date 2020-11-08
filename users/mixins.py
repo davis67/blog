@@ -9,7 +9,8 @@ class MustAddProfilePictureAfterSignUp(UserPassesTestMixin):
     permission_denied_message = "You must add a Profile Picture to continue"
 
     def test_func(self):
-        # print(bool(self.request.user.avatar))
+        if self.request.user.is_authenticated is False:
+            return True
         return bool(self.request.user.avatar) is True
 
     def handle_no_permission(self):

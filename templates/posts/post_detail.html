@@ -18,7 +18,7 @@ Home
     </h3>
 
 </div>
-<h1>By {{post.author.username}}
+<h1>By <a href="{{post.author.get_absolute_url}}">{{post.author.username}}</a>
     {% if post.author.superhost %}
     (superhost)
     {% endif%}

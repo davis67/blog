@@ -14,15 +14,22 @@ class HomeView(mixins.MustAddProfilePictureAfterSignUp, mixins.LoggedOutOnlyView
     """HomeView Definition """
     model = models.Post
 
-    paginate_by = 10
-    ordering = "-created_at"
-    paginate_orphans = 5
+    def get(self, request, *args, **kwargs):
+        self.paginate_by = 10
+        self.ordering = "-created_at"
+        self.paginate_orphans = 5
+        self.object_list = self.get_queryset()
+        context = super().get_context_data(*args, **kwargs)
+        context['categories'] = models.Category.objects.all()
+        context["now"] = timezone.now()
+        return render(request, "posts/post_list.html", context)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        now = timezone.now()
-        context["now"] = now
-        return context
+    def get_queryset(self):
+        passed_category = self.kwargs.get('category')
+        if passed_category is not None:
+            category = models.Category.objects.get(name=passed_category)
+            return models.Post.objects.filter(category=category.id)
+        return models.Post.objects.all()
 
 
 class PostDetail(DetailView):

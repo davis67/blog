@@ -5,87 +5,108 @@ Home
 {% endblock page_name %}
 
 {% block content %}
-<div>
+<div class="bg-white relative">
+    <img src="{{post.photo.url}}" class="h-64 w-full object-cover" alt="">
+    <div class="w-3/4 mx-auto container">
+        <div class=" absolute top-0 pt-16 w-full">
 
-    <h1>{{post.title}}</h1>
-    <h3>
-        {{post.description}}
+            <h1 class="text-2xl text-white">{{post.title}}</h1>
+            <h4 class="h4 bg-gray-400 w-1/6 text-center px-2 py-1">{{post.category.name}}</h4>
+            <div class="flex items-center mt-3">
+                <img src="{{post.author.avatar.url}}" class="h-24 w-24 rounded-full" alt="">
+                <div class="ml-4">
+                    <h2 class="text-xl text-white"><a
+                            href="{{post.author.get_absolute_url}}">{{post.author.username}}</a></h2>
+                    <h3 class="text-xl text-white">{{post.created_at}}</h3>
+                </div>
+            </div>
 
-        {% if post.author == user %}
-        <a href="{% url 'posts:post-update' pk=post.id %}">edit</a>
-        <a href="{% url 'posts:post-delete' pk=post.id %}">delete</a>
-        {% endif %}
-    </h3>
-
+        </div>
+    </div>
 </div>
-<h1>By <a href="{{post.author.get_absolute_url}}">{{post.author.username}}</a>
-    {% if post.author.superhost %}
-    (superhost)
-    {% endif%}
-</h1>
-<h2>comments</h2>
-{% if post.comments.count > 0 %}
-<ul>
-    {% for comment in post.comments.all %}
-    <li>
-        {{comment.description}}
-        {% if comment.author == user %}
-        <a href="">edit</a>
-        <a href="">delete</a>
+
+<div class="w-3/4 mx-auto mt-10 container">
+    <div>
+        <div>{{post.description}}</div>
+        {% if post.author == user %}
+        <div class="mt-4">
+            <a href="{% url 'posts:post-update' pk=post.id %}" class="bg-gray-400 px-4 py-3 hover:bg-gray-300">Edit</a>
+            <a href="{% url 'posts:post-delete' pk=post.id %}"
+                class="bg-gray-400 px-4 py-3 hover:bg-gray-300">Delete</a>
+        </div>
         {% endif %}
-        <h1>
-            By {{comment.author.username}}
-        </h1>
-    </li>
+    </div>
+</div>
+<div class="w-3/4 mx-auto mt-10 container">
+    <h2 class="text-2xl">Comments</h2>
+    {% if post.comments.count > 0 %}
+    <ul class="list-none">
+        {% for comment in post.comments.all %}
+        <li>
+            {{comment.description}}
+            {% if comment.author == user %}
+            <div class="my-4">
+                <a href="" class="bg-gray-400 px-4 py-3 hover:bg-gray-300">Edit</a>
+                <a href="" class="bg-gray-400 px-4 py-3 hover:bg-gray-300">Delete</a>
+            </div>
+            {% endif %}
+            <h1>
+                By {{comment.author.username}}
+            </h1>
+        </li>
+    </ul>
 
     {% if comment.replies.count > 0 %}
-
-    <h2>Reply</h2>
-
-    {% for reply in comment.replies.all %}
-    <li>
-        {{reply.description}}
-        {% if reply.author == user %}
-        <a href="">edit</a>
-        <a href="">delete</a>
-        {% endif %}
-        <h1>
-            By {{reply.author.username}}
-        </h1>(reply)
-    </li>
-    {%endfor%}
-
+    <div class="ml-12 mt-10">
+        <h2 class="text-2xl">Replies</h2>
+        <ul class="list-none">
+            {% for reply in comment.replies.all %}
+            <li>
+                {{reply.description}}
+                {% if reply.author == user %}
+                <a href="">edit</a>
+                <a href="">delete</a>
+                {% endif %}
+                <h1>
+                    By {{reply.author.username}}
+                </h1>
+            </li>
+            {%endfor%}
+        </ul>
+    </div>
     {% endif %}
 
     {% if user.is_authenticated %}
-    <form method='POST' action="{% url 'posts:add-reply' pk=comment.id %}">
+    <form method='POST' class="ml-12 mt-10 mb-4" action="{% url 'posts:add-reply' pk=comment.id %}">
         {% csrf_token %}
         <div>
             <textarea name="description" id="" cols="50" rows="5" required></textarea>
         </div>
-        <button type="submit">Reply</button>
+        <button type="submit" class="bg-gray-400 px-4 py-3 hover:bg-gray-300">Reply</button>
     </form>
     {% endif %}
 
     {%endfor%}
 
-</ul>
 
-{% else %}
 
-<ul>
-    <li>No Comments</li>
-</ul>
 
-{% endif%}
+    {% else %}
+
+    <ul>
+        <li>No Comments</li>
+    </ul>
+
+    {% endif%}
+</div>
 
 {% if user.is_authenticated %}
-<form method='POST' action="{% url 'posts:add-comment' pk=post.id %}">
+<form method='POST' class="w-3/4 mx-auto  container" action="{% url 'posts:add-comment' pk=post.id %}">
     {% csrf_token %}
     <div>
         <textarea name="description" id="" cols="50" rows="10" required></textarea>
     </div>
-    <button type="submit">Comment</button>
+    <button type="submit" class="bg-gray-400 px-4 py-3 hover:bg-gray-300 mb-4">Comment</button>
 </form>
 {% endif%}
 

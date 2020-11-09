@@ -5,15 +5,72 @@ User Profile
 {% endblock page_name %}
 
 {% block content %}
-<div>
-    <h1>User Profile</h1>
-    {% if user_obj.avatar%}
-    <img src="{{user_obj.avatar.url}}" width="300" height="300" alt="">
-    {% endif %}
+<div class="w-3/4 mx-auto container py-10">
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+                User Profile
+            </h3>
+            <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
+                Personal Information and details.
+            </p>
+        </div>
+        <div>
+            <dl>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm leading-5 font-medium text-gray-500">
+                        Avatar
+                    </dt>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        {% if user_obj.avatar%}
+                        <img src="{{user_obj.avatar.url}}" class="h-16 w-16 rounded-full" alt="">
+                        {% endif %}
+                    </dd>
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm leading-5 font-medium text-gray-500">
+                        First Name
+                    </dt>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{user_obj.first_name}}
+                    </dd>
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm leading-5 font-medium text-gray-500">
+                        Last Name
+                    </dt>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{user_obj.last_name}}
+                    </dd>
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm leading-5 font-medium text-gray-500">
+                        Username
+                    </dt>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{user_obj.username}}
+                    </dd>
+                </div>
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm leading-5 font-medium text-gray-500">
+                        Email
+                    </dt>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{user_obj.email}}
+                    </dd>
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm leading-5 font-medium text-gray-500">
+                        <a href="{% url 'users:update' %}" class="bg-gray-400 px-4 py-3 hover:bg-gray-300 my-4">Edit
+                            Profile</a>
+                    </dt>
+                    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
 
-    <h1>{{user_obj.first_name}}</h1>
-
-    <a href="{% url 'users:update' %}">Edit Profile</a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
 </div>
 
 {% endblock content %}

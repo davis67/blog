@@ -59,6 +59,10 @@ class Post(core_models.TimeStampedModel):
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'pk': str(self.pk)})
 
+    def latest_post(self):
+        post, = Post.objects.all()[:1]
+        return post
+
     # def has_add_permission(self, request,obj=None):
     #     # Should return True if adding an object is permitted, False otherwise.
     #     pass

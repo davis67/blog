@@ -37,7 +37,7 @@ class PostDetail(DetailView):
     model = models.Post
 
 
-class PostCreate(mixins.LoggedInOnlyView, FormView):
+class PostCreate(mixins.MustAddProfilePictureAfterSignUp, mixins.LoggedInOnlyView, FormView):
     """Create view Definition """
 
     def get(self, request):

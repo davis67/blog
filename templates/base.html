@@ -10,14 +10,12 @@
         {% endblock page_name %}|Blog</title>
 </head>
 
-<body class="text-gray-800">
-    <header class="container max-w-full  border-b border-gray-400">
-        <div class="w-3/4 mx-auto flex items-center justify-between h-20 inset-0 px-6 ">
-            {% include "partials/header.html" %}
-        </div>
-    </header>
+<body class="text-gray-800 ">
+    <div style="min-height: 90vh;">
+        {% include "partials/header.html" %}
 
-    {% block content%}{% endblock %}
+        {% block content%}{% endblock %}
+    </div>
 
     {% include "partials/footer.html" %}
 </body>

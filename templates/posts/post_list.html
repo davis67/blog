@@ -5,29 +5,6 @@ All Posts
 {% endblock page_name %}
 
 {% block content %}
-<div class="bg-gray-200">
-    <div class="w-3/4 pl-6 mx-auto h-20 flex">
-        <div class="w-full flex items-center">
-            <ul class="w-3/4 flex justify-between items-center">
-                <li class="hover:text-gray-600">
-                    <a href="{% url 'core:home' %}">Latest Posts</a>
-                </li>
-                {% for category in categories %}
-                <li>
-                    <a class="hover:text-gray-600" href="{% url 'core:home' category.name %}">{{category.name}}</a>
-                </li>
-                {% endfor %}
-            </ul>
-            <div class="w-1/4 pl-16 flex justify-center">
-                {% if user.is_authenticated %}
-                <h3>
-                    <a href="{% url 'posts:post-create' %}" class="bg-gray-400 px-4 py-3 hover:bg-gray-300">Add Post</a>
-                </h3>
-                {% endif%}
-            </div>
-        </div>
-    </div>
-</div>
 
 {% if object_list.count > 0 %}
 <div class="w-3/4 pl-6 mx-auto mt-10 flex">

@@ -5,19 +5,17 @@ Add Profile Picture
 {% endblock page_name %}
 
 {% block content %}
-<div>
-    <div>
-        {{form.errors}}
-        <h1>Add Profile Picture</h1>
-        <form method="post" action="{% url 'users:add-profile-picture' %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div>
-                <label for="">Profile Picture</label>
-                <input type="file" name="avatar">
-            </div>
-            <input type="submit" value="Create Post">
-        </form>
-    </div>
+<div class="w-3/4 mx-auto container">
+    {{form.errors}}
+    <h1 class="text-2xl my-10">Add Profile Picture</h1>
+    <form method="post" action="{% url 'users:add-profile-picture' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <label for="">Profile Picture</label>
+            <input type="file" name="avatar">
+        </div>
+        <input type="submit" class="bg-gray-400 px-4 py-3 hover:bg-gray-300 my-4" value="Add Profile Picture">
+    </form>
 </div>
 
 {% endblock content %}

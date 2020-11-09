@@ -8,9 +8,11 @@ All Posts
 {%if form.errors %}
 {{form.errors}}
 {%endif%}
-<form method="post" action="{% url 'posts:post-create' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Create Post">
-</form>
+<div class="w-3/4 mx-auto container">
+    <form method="post" action="{% url 'posts:post-create' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="bg-gray-400 px-4 py-3 hover:bg-gray-300 my-4" value="Create Post">
+    </form>
+</div>
 {% endblock content %}

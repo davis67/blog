@@ -6,45 +6,69 @@ All Posts
 
 {% block content %}
 
-{{now}}
-
-{% if user.is_authenticated %}
-<h3>
-    <a href="{% url 'posts:post-create' %}">add a post</a>
-</h3>
-{% endif%}
-<ul>
-    <h1>
-        <a href="{% url 'core:home' %}">Latest Posts</a>
-    </h1>
-    {% for category in categories %}
-    <h1>
-        <a href="{% url 'core:home' category.name %}">{{category.name}}</a>
-    </h1>
-    {% endfor %}
-</ul>
-
-
 {% if object_list.count > 0 %}
-{% for post in object_list %}
-<h1>
-    <a href="{% url 'posts:detail' post.pk %}">{{post.title}}</a>
-</h1>
-{% endfor %}
+<div class="w-3/4 pl-6 mx-auto mt-10 flex">
+    <div class="w-full flex flex-wrap">
+        {% for post in object_list %}
+
+        <div class="w-1/4 mb-8 px-2">
+            <a href="{% url 'posts:detail' post.pk %}">
+                <div class="bg-gray-200 border border-gray-200">
+                    <div style="background-image: url({{post.photo.url}});" class="h-64 w-full bg-cover"></div>
+                    <div class="p-6">
+                        <div class="w-full">
+                            <div class="w-2/4 flex self-center">
+                                <h4 class="h4 bg-gray-400 px-2 py-1">{{post.category.name}}</h4>
+                            </div>
+                            <p>
+                                {{post.title}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- <h1>
+        <a href="{% url 'posts:detail' post.pk %}">{{post.title}}</a>
+    </h1> -->
+        {% endfor %}
+    </div>
+</div>
 {% else %}
 <h1>
     No Posts
 </h1>
 {% endif %}
-<h5>
+<div class="w-3/4 mx-auto flex justify-center items-center">
     {% if page_obj.has_previous %}
-    <a href="?page={{page_obj.previous_page_number}}">Previous</a>
+    <div class="flex self-center ml-2">
+        <a href="?page={{page_obj.previous_page_number}}"
+            class="-mt-px border-t-2 border-transparent pt-4 pr-1 inline-flex items-center text-sm leading-5 font-medium text-gray-500 hover:text-gray-700  focus:outline-none focus:text-gray-700  transition ease-in-out duration-150">
+            <svg class="mr-3 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                    d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
+                    clip-rule="evenodd" />
+            </svg>
+            Previous
+        </a>
+    </div>
     {% endif %}
-    {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+    <div class="self-center pt-4 ml-2">{{page_obj.number}} of {{page_obj.paginator.num_pages}}</div>
     {% if page_obj.has_next %}
-    <a href="?page={{page_obj.next_page_number}}">Next</a>
+    <div class="flex self-center ml-2">
+        <a href="?page={{page_obj.next_page_number}}"
+            class="-mt-px border-t-2 border-transparent pt-4 pl-1 inline-flex items-center text-sm leading-5 font-medium text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700 transition ease-in-out duration-150">
+            Next
+            <svg class="ml-3 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                    d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                    clip-rule="evenodd" />
+            </svg>
+        </a>
+    </div>
     {% endif %}
-</h5>
+</div>
 
 {% comment %} {% for page in page_range %}
 <a href="?page={{page}}">{{page}}</a>

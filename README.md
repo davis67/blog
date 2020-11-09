@@ -17,3 +17,7 @@ Features:.
 12. Logged in users can only delete the posts they created.✅
 13. Admin must approve user posts before they are visible on the homepage.❌
 14. Anonymous users can only view but not comment on posts.✅
+
+### Screenshots
+![Screen shot](posts_lists.png)
+![Screen shot](posts_details.png)

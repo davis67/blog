@@ -5,13 +5,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <title>{% block page_name %}
         {% endblock page_name %}|Blog</title>
 </head>
 
-<body class="text-gray-800 mt-20">
-    <header>
-        {% include "partials/header.html" %}
+<body class="text-gray-800">
+    <header class="container max-w-full  border-b border-gray-400">
+        <div class="w-3/4 mx-auto flex items-center justify-between h-20 inset-0 px-6 ">
+            {% include "partials/header.html" %}
+        </div>
     </header>
 
     {% block content%}{% endblock %}
